@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ECommerceApp.Models.Product>
+
+<div class="container mt-5">
+    <h2>Available Products</h2>
+    <div class="row">
+        @foreach (var product in Model.Where(p => p.ParentProductId != null || (p.Category.Name == "Books" && p.ParentProductId == null)))
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow text-center">
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" alt="@product.Name" class="product-image card-img-top" style="max-height:200px;object-fit:contain;" />
+                    }
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">
+                            @* Show Brand, Model, Variety if available, else Name *@
+                            @if (!string.IsNullOrEmpty(product.Brand))
+                            {
+                                @product.Brand
+                                @if (!string.IsNullOrEmpty(product.Model))
+                                {
+                                    @: @product.Model
+                                }
+                                @if (!string.IsNullOrEmpty(product.Variety))
+                                {
+                                    @: (@product.Variety)
+                                }
+                            }
+                            else
+                            {
+                                @product.Name
+                            }
+                        </h5>
+                        <p class="card-text">@product.Description</p>
+                        <p class="card-text font-weight-bold">$@product.Price</p>
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-black">View</a>
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="mt-2">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <input type="number" name="quantity" value="1" min="1" class="form-control mb-2" />
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

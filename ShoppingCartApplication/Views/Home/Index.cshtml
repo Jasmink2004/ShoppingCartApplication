@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Welcome to ECommerceApp";
+}
+
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome to ECommerceApp!</h1>
+        <p class="lead">Your one-stop shop for the best tech products.</p>
+        <hr class="my-4" />
+        <p>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-primary btn-lg">
+                Start Shopping
+            </a>
+        </p>
+        <p>
+            <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-secondary">
+                View Cart
+            </a>
+        </p>
+    </div>
+</div>
